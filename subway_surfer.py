@@ -179,7 +179,7 @@ if __name__ == "__main__":
 
     game_started = False
     x_pos_index = 0
-    y_pos_index = 1
+    y_pos_index = 0
     MID_Y = None
 
     while camera_video.isOpened():
