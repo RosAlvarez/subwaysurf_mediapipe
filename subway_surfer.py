@@ -95,24 +95,26 @@ def checkLeftRight(image, results, draw=False, display=False):
 
     if (right_x <= width//2 and left_x <= width//2):
         horizontal_position = 'Left'
-        if x_pos_index!=0:
+        if x_pos_index==0:
             pyautogui.press('left')
-            x_pos_index -= 1
+            x_pos_index = -1
 
     elif (right_x >= width//2 and left_x >= width//2):
         horizontal_position = 'Right'
-        if x_pos_index!=2:
+        if x_pos_index==0:
             pyautogui.press('right')
-            x_pos_index += 1
+            x_pos_index = 1
 
     elif (right_x >= width//2 and left_x <= width//2):
         horizontal_position = 'Center'
-        if x_pos_index==2:
+        if x_pos_index==1:
             pyautogui.press('left')
-            x_pos_index -= 1
-        if x_pos_index==0:
+            x_pos_index = 0
+        #     x_pos_index -= 1
+        if x_pos_index==-1:
             pyautogui.press('right')
-            x_pos_index += 1
+            x_pos_index = 0
+        #     x_pos_index += 1
 
     if draw:
         cv2.putText(output_image, horizontal_position, (5, height - 10), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)     
@@ -142,20 +144,19 @@ def checkJumpCrouch(image, results, draw=False, display=False):
 
     if (actual_mid_y < lower_bound):
         posture = 'Jumping'
-        if posture == 'Jumping' and y_pos_index == 1:
+        if y_pos_index == 0:
             pyautogui.press('up')
-            y_pos_index += 1
+            y_pos_index = 1
 
     elif (actual_mid_y > upper_bound):
         posture = 'Crouching'
-        if posture == 'Crouching' and y_pos_index == 1:
+        if y_pos_index == 0:
             pyautogui.press('down')
-            y_pos_index -= 1
+            y_pos_index = -1
 
     else:
         posture = 'Standing'
-        if posture == 'Standing' and y_pos_index != 1:
-            y_pos_index = 1
+        y_pos_index = 0
 
     if draw:
         cv2.putText(output_image, posture, (5, height - 50), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
@@ -177,7 +178,7 @@ if __name__ == "__main__":
     cv2.namedWindow('Subway Surfers with Pose Detection', cv2.WINDOW_NORMAL)
 
     game_started = False
-    x_pos_index = 1
+    x_pos_index = 0
     y_pos_index = 1
     MID_Y = None
 
