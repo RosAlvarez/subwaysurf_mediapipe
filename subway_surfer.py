@@ -144,19 +144,14 @@ def checkJumpCrouch(image, results, draw=False, display=False):
 
     if (actual_mid_y < lower_bound):
         posture = 'Jumping'
-        if y_pos_index == 0:
-            pyautogui.press('up')
-            y_pos_index = 1
+        pyautogui.press('up')
 
     elif (actual_mid_y > upper_bound):
         posture = 'Crouching'
-        if y_pos_index == 0:
-            pyautogui.press('down')
-            y_pos_index = -1
+        pyautogui.press('down')
 
     else:
         posture = 'Standing'
-        y_pos_index = 0
 
     if draw:
         cv2.putText(output_image, posture, (5, height - 50), cv2.FONT_HERSHEY_PLAIN, 2, (255, 255, 255), 3)
@@ -179,7 +174,6 @@ if __name__ == "__main__":
 
     game_started = False
     x_pos_index = 0
-    y_pos_index = 0
     MID_Y = None
 
     while camera_video.isOpened():
